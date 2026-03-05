@@ -1,0 +1,294 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/* ═══════════════════════════════════════════════════════════
+   @theme — Design tokens BRAISE
+   Palette or/ambre cuivré · Typographie éditoriale · Dark-first
+
+   Convention de nommage :
+   --color-gold-*    →  bg-gold-* / text-gold-*    (primary custom)
+   --color-carbon-*  →  bg-carbon-* / text-carbon-* (surfaces dark)
+   --radius-card     →  rounded-card
+   --shadow-glow-gold →  shadow-glow-gold
+   --spacing-28      →  p-28 / m-28 / gap-28
+   ═══════════════════════════════════════════════════════════ */
+
+@theme static {
+
+  /* ── Typographie ───────────────────────────────────────── */
+  /* @nuxt/fonts auto-fetch Google Fonts                     */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Palette PRIMARY : Gold (ambre / cuivre chaud) ──────── */
+  /* Nom custom → zéro collision avec Tailwind built-in      */
+  /* Mappé dans app.config.ts : colors.primary = 'gold'      */
+  --color-gold-50:  #FDF8EE;
+  --color-gold-100: #FAF0D3;
+  --color-gold-200: #F4DFA0;
+  --color-gold-300: #EBC96A;
+  --color-gold-400: #DFB043;
+  --color-gold-500: #C9933A;
+  --color-gold-600: #A97228;
+  --color-gold-700: #875519;
+  --color-gold-800: #6B3E12;
+  --color-gold-900: #572F0E;
+  --color-gold-950: #32180A;
+
+  /* ── Palette SURFACE : Carbon (fond dark chaud) ─────────── */
+  /* Utilisée pour bg-carbon-* dans les layouts dark         */
+  --color-carbon-50:  #F7F5F2;
+  --color-carbon-100: #EDE9E2;
+  --color-carbon-200: #D6CEC2;
+  --color-carbon-300: #B8A99A;
+  --color-carbon-400: #957D6B;
+  --color-carbon-500: #7A6152;
+  --color-carbon-600: #604A3D;
+  --color-carbon-700: #4A3629;
+  --color-carbon-800: #2E2018;
+  --color-carbon-900: #1A1208;
+  --color-carbon-950: #0E0C09;
+
+  /* ── Espacement ─────────────────────────────────────────── */
+  --spacing-18: 4.5rem;    /* 72px  */
+  --spacing-22: 5.5rem;    /* 88px  */
+  --spacing-28: 7rem;      /* 112px */
+  --spacing-88: 22rem;     /* 352px */
+
+  /* ── Border radius ──────────────────────────────────────── */
+  --radius-card:  0.75rem;
+  --radius-pill:  9999px;
+  --radius-loose: 1.5rem;
+
+  /* ── Ombres ─────────────────────────────────────────────── */
+  --shadow-glow-gold:   0 0 40px rgb(201 147 58 / 0.30);
+  --shadow-glow-subtle: 0 0 60px rgb(201 147 58 / 0.10);
+  --shadow-card:        0 4px 24px -4px rgb(0 0 0 / 0.20), 0 2px 8px -2px rgb(0 0 0 / 0.12);
+  --shadow-card-hover:  0 16px 48px -8px rgb(0 0 0 / 0.35), 0 4px 16px -4px rgb(0 0 0 / 0.18);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Scroll-driven animations — CSS natif, zéro JS library
+   animation-timeline: view() = Chrome 115+, Firefox 128+
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    animation: reveal-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 22%;
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-32px);
+    animation: reveal-from-left linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 22%;
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(32px);
+    animation: reveal-from-right linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 22%;
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.94);
+    animation: reveal-scale linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 20%;
+  }
+
+  /* Délais en cascade pour les grilles */
+  .reveal-stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .reveal-stagger > *:nth-child(2) { animation-delay: 80ms; }
+  .reveal-stagger > *:nth-child(3) { animation-delay: 160ms; }
+  .reveal-stagger > *:nth-child(4) { animation-delay: 240ms; }
+  .reveal-stagger > *:nth-child(5) { animation-delay: 320ms; }
+  .reveal-stagger > *:nth-child(6) { animation-delay: 400ms; }
+}
+
+@keyframes reveal-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-from-left {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes reveal-from-right {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes reveal-scale {
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   @starting-style — animation d'entrée DOM initiale
+   Chrome 126+, Safari 18+
+   ═══════════════════════════════════════════════════════════ */
+
+.enter-fade {
+  transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.enter-fade-delay {
+  transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-delay: 0.25s;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.enter-fade-slow {
+  transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-delay: 0.5s;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   View Transitions API — transitions de page
+   ═══════════════════════════════════════════════════════════ */
+
+::view-transition-old(root) {
+  animation: vt-out 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+::view-transition-new(root) {
+  animation: vt-in 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes vt-out {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+
+@keyframes vt-in {
+  from { opacity: 0; transform: translateY(8px); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Composants visuels BRAISE
+   ═══════════════════════════════════════════════════════════ */
+
+/* Ligne décorative dorée */
+.gold-line {
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--color-gold-500);
+}
+
+/* Texte gradient or — effet shimmer */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-gold-600) 0%,
+    var(--color-gold-300) 40%,
+    var(--color-gold-500) 60%,
+    var(--color-gold-700) 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+/* Tag cuisine */
+.cuisine-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.65rem;
+  border: 1px solid color-mix(in oklch, var(--color-gold-500) 35%, transparent);
+  border-radius: var(--radius-pill);
+  color: var(--color-gold-500);
+}
+
+/* Carte menu */
+.menu-card {
+  border: 1px solid transparent;
+  border-radius: var(--radius-card);
+  transition: border-color 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow   0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform    0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.menu-card:hover {
+  border-color: color-mix(in oklch, var(--color-gold-500) 22%, transparent);
+  box-shadow: 0 2px 16px -2px rgb(0 0 0 / 0.18);
+  transform: translateY(-1px);
+}
+
+/* Gradient hero — placeholder sans image réelle */
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 55% 45% at 75% 35%, rgb(201 147 58 / 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 55% at 15% 75%, rgb(87 47 14 / 0.5) 0%, transparent 65%),
+    linear-gradient(155deg, var(--color-carbon-950) 0%, var(--color-carbon-900) 55%, #180e04 100%);
+}
+
+/* Overlay pour les images hero */
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgb(14 12 9 / 0.1) 0%,
+    rgb(14 12 9 / 0.35) 45%,
+    rgb(14 12 9 / 0.88) 100%
+  );
+}
+
+/* Float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+/* Séparateur éditorial avec texte centré */
+.editorial-divider {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.editorial-divider::before,
+.editorial-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.12;
+}
