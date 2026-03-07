@@ -5,12 +5,15 @@
    @theme — Design tokens BRAISE
    Palette or/ambre cuivré · Typographie éditoriale · Dark-first
 
-   Convention de nommage :
-   --color-gold-*    →  bg-gold-* / text-gold-*    (primary custom)
-   --color-carbon-*  →  bg-carbon-* / text-carbon-* (surfaces dark)
-   --radius-card     →  rounded-card
-   --shadow-glow-gold →  shadow-glow-gold
-   --spacing-28      →  p-28 / m-28 / gap-28
+   RÈGLE ABSOLUE DU DESIGN SYSTEM :
+   Les templates Vue n'utilisent JAMAIS les couleurs de palette
+   directement. Toujours les tokens sémantiques :
+
+     ✅  bg-default  text-muted  border-default  bg-primary-500
+     ❌  bg-carbon-950  text-stone-400  dark:bg-carbon-900
+
+   Les tokens --ui-* (light/dark) sont contrôlés ICI dans
+   les blocs :root {} et .dark {} — zéro logique JS de thème.
    ═══════════════════════════════════════════════════════════ */
 
 @theme static {
@@ -22,7 +25,6 @@
   --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
 
   /* ── Palette PRIMARY : Gold (ambre / cuivre chaud) ──────── */
-  /* Nom custom → zéro collision avec Tailwind built-in      */
   /* Mappé dans app.config.ts : colors.primary = 'gold'      */
   --color-gold-50:  #FDF8EE;
   --color-gold-100: #FAF0D3;
@@ -37,7 +39,8 @@
   --color-gold-950: #32180A;
 
   /* ── Palette SURFACE : Carbon (fond dark chaud) ─────────── */
-  /* Utilisée pour bg-carbon-* dans les layouts dark         */
+  /* Utilisée via --ui-bg et --ui-bg-* dans .dark {}         */
+  /* Ne jamais utiliser bg-carbon-* dans les templates       */
   --color-carbon-50:  #F7F5F2;
   --color-carbon-100: #EDE9E2;
   --color-carbon-200: #D6CEC2;
@@ -50,11 +53,26 @@
   --color-carbon-900: #1A1208;
   --color-carbon-950: #0E0C09;
 
+  /* ── Palette ACCENT : Terracotta (décoratif, branding) ──── */
+  /* Pas de slot Nuxt UI → bg-accent-* / text-accent-*       */
+  /* Évoque la braise, la terre cuite, le four à bois        */
+  --color-accent-50:  #FDF3EE;
+  --color-accent-100: #FAE3D4;
+  --color-accent-200: #F5C4A4;
+  --color-accent-300: #EE9D6E;
+  --color-accent-400: #E37240;
+  --color-accent-500: #C05A2A;
+  --color-accent-600: #9E4420;
+  --color-accent-700: #7D3219;
+  --color-accent-800: #622615;
+  --color-accent-900: #4E1E12;
+  --color-accent-950: #2C0E08;
+
   /* ── Espacement ─────────────────────────────────────────── */
-  --spacing-18: 4.5rem;    /* 72px  */
-  --spacing-22: 5.5rem;    /* 88px  */
-  --spacing-28: 7rem;      /* 112px */
-  --spacing-88: 22rem;     /* 352px */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-28: 7rem;
+  --spacing-88: 22rem;
 
   /* ── Border radius ──────────────────────────────────────── */
   --radius-card:  0.75rem;
@@ -66,6 +84,56 @@
   --shadow-glow-subtle: 0 0 60px rgb(201 147 58 / 0.10);
   --shadow-card:        0 4px 24px -4px rgb(0 0 0 / 0.20), 0 2px 8px -2px rgb(0 0 0 / 0.12);
   --shadow-card-hover:  0 16px 48px -8px rgb(0 0 0 / 0.35), 0 4px 16px -4px rgb(0 0 0 / 0.18);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT MODE — Override des variables sémantiques Nuxt UI
+   Référence : ui.nuxt.com/docs/getting-started/theme/css-variables
+
+   Ces variables alimentent les classes utilitaires :
+     bg-default   bg-muted    bg-elevated   bg-accented
+     text-default text-muted  text-dimmed   text-highlighted
+     border-default border-muted border-accented
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --ui-bg:           white;
+  --ui-bg-muted:     var(--color-stone-50);
+  --ui-bg-elevated:  var(--color-stone-100);
+  --ui-bg-accented:  var(--color-stone-200);
+
+  --ui-text-highlighted: var(--color-stone-950);
+  --ui-text:             var(--color-stone-800);
+  --ui-text-muted:       var(--color-stone-500);
+  --ui-text-dimmed:      var(--color-stone-400);
+  --ui-text-toned:       var(--color-stone-600);
+
+  --ui-border:          var(--color-stone-200);
+  --ui-border-muted:    var(--color-stone-100);
+  --ui-border-accented: var(--color-stone-300);
+
+  --ui-radius: 0.375rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DARK MODE — Override avec palette carbon + stone
+   ═══════════════════════════════════════════════════════════ */
+
+.dark {
+  --ui-bg:           var(--color-carbon-950);
+  --ui-bg-muted:     var(--color-carbon-900);
+  --ui-bg-elevated:  var(--color-carbon-800);
+  --ui-bg-accented:  var(--color-carbon-700);
+
+  --ui-text-highlighted: white;
+  --ui-text:             var(--color-stone-200);
+  --ui-text-muted:       var(--color-stone-400);
+  --ui-text-dimmed:      var(--color-stone-500);
+  --ui-text-toned:       var(--color-stone-300);
+
+  --ui-border:          var(--color-carbon-800);
+  --ui-border-muted:    var(--color-carbon-700);
+  --ui-border-accented: var(--color-carbon-600);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -106,7 +174,6 @@
     animation-range: entry 0% cover 20%;
   }
 
-  /* Délais en cascade pour les grilles */
   .reveal-stagger > *:nth-child(1) { animation-delay: 0ms; }
   .reveal-stagger > *:nth-child(2) { animation-delay: 80ms; }
   .reveal-stagger > *:nth-child(3) { animation-delay: 160ms; }
@@ -192,7 +259,6 @@
    Composants visuels BRAISE
    ═══════════════════════════════════════════════════════════ */
 
-/* Ligne décorative dorée */
 .gold-line {
   display: block;
   width: 2.5rem;
@@ -200,7 +266,6 @@
   background: var(--color-gold-500);
 }
 
-/* Texte gradient or — effet shimmer */
 @keyframes shimmer {
   0%   { background-position: -200% center; }
   100% { background-position: 200% center; }
@@ -221,7 +286,6 @@
   animation: shimmer 5s linear infinite;
 }
 
-/* Tag cuisine */
 .cuisine-tag {
   font-family: var(--font-mono);
   font-size: 0.65rem;
@@ -234,7 +298,6 @@
   color: var(--color-gold-500);
 }
 
-/* Carte menu */
 .menu-card {
   border: 1px solid transparent;
   border-radius: var(--radius-card);
@@ -249,7 +312,6 @@
   transform: translateY(-1px);
 }
 
-/* Gradient hero — placeholder sans image réelle */
 .hero-gradient {
   background:
     radial-gradient(ellipse 55% 45% at 75% 35%, rgb(201 147 58 / 0.15) 0%, transparent 60%),
@@ -257,7 +319,6 @@
     linear-gradient(155deg, var(--color-carbon-950) 0%, var(--color-carbon-900) 55%, #180e04 100%);
 }
 
-/* Overlay pour les images hero */
 .hero-overlay {
   background: linear-gradient(
     to bottom,
@@ -267,7 +328,6 @@
   );
 }
 
-/* Float animation */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-8px); }
@@ -277,7 +337,6 @@
   animation: float 5s ease-in-out infinite;
 }
 
-/* Séparateur éditorial avec texte centré */
 .editorial-divider {
   display: flex;
   align-items: center;

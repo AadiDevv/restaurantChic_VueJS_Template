@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { locale, t } = useLang()
 const { allCategories, itemsByCategory, formatPrice } = useMenu()
-const colorMode = useColorMode()
 const { info } = useRestaurant()
 
 const activeCategory = ref<string>('all')
@@ -22,10 +21,7 @@ useSeoMeta({
   <div class="min-h-screen">
 
     <!-- Hero page menu -->
-    <div
-      class="py-32 relative overflow-hidden"
-      :class="colorMode.value === 'dark' ? 'bg-carbon-950' : 'bg-stone-50'"
-    >
+    <div class="py-32 relative overflow-hidden bg-muted">
       <div
         class="absolute inset-0 pointer-events-none"
         style="background: radial-gradient(ellipse 50% 60% at 50% 0%, rgb(201 147 58 / 0.07) 0%, transparent 70%);"
@@ -33,7 +29,7 @@ useSeoMeta({
       <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
         <div class="flex items-center justify-center gap-4 mb-6 enter-fade">
           <span class="gold-line" />
-          <span class="text-label text-gold-500">
+          <span class="text-label text-primary-500">
             {{ locale === 'fr' ? 'Cuisine fusion' : 'Fusion cuisine' }}
           </span>
           <span class="gold-line" />
@@ -44,10 +40,7 @@ useSeoMeta({
         >
           {{ locale === 'fr' ? 'La Carte' : 'The Menu' }}
         </h1>
-        <p
-          class="text-base max-w-lg mx-auto leading-relaxed enter-fade-slow"
-          :class="colorMode.value === 'dark' ? 'text-stone-400' : 'text-stone-500'"
-        >
+        <p class="text-base text-muted max-w-lg mx-auto leading-relaxed enter-fade-slow">
           {{ locale === 'fr'
             ? 'Produits de saison, cuissons à la braise, influences des quatre coins du monde.'
             : 'Seasonal produce, ember cooking, influences from the four corners of the world.' }}
@@ -56,21 +49,14 @@ useSeoMeta({
     </div>
 
     <!-- Filtres catégories -->
-    <div
-      class="sticky top-16 z-30 border-b backdrop-blur-md"
-      :class="colorMode.value === 'dark'
-        ? 'bg-carbon-950/90 border-carbon-800/50'
-        : 'bg-white/90 border-stone-200'"
-    >
+    <div class="sticky top-16 z-30 border-b border-default bg-default/90 backdrop-blur-md">
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex items-center gap-2 overflow-x-auto py-4 scrollbar-none">
           <button
             class="text-label px-5 py-2 rounded-pill border transition-all duration-200 shrink-0 cursor-pointer"
             :class="activeCategory === 'all'
-              ? 'bg-gold-500 border-gold-500 text-carbon-950'
-              : colorMode.value === 'dark'
-                ? 'border-carbon-700 text-stone-400 hover:border-gold-500/50 hover:text-gold-400'
-                : 'border-stone-200 text-stone-500 hover:border-gold-400 hover:text-gold-600'"
+              ? 'bg-primary-500 border-primary-500 text-primary-950'
+              : 'border-default text-muted hover:border-primary-500/50 hover:text-primary-500'"
             @click="activeCategory = 'all'"
           >
             {{ locale === 'fr' ? 'Tout' : 'All' }}
@@ -80,10 +66,8 @@ useSeoMeta({
             :key="cat.id"
             class="text-label px-5 py-2 rounded-pill border transition-all duration-200 shrink-0 cursor-pointer"
             :class="activeCategory === cat.id
-              ? 'bg-gold-500 border-gold-500 text-carbon-950'
-              : colorMode.value === 'dark'
-                ? 'border-carbon-700 text-stone-400 hover:border-gold-500/50 hover:text-gold-400'
-                : 'border-stone-200 text-stone-500 hover:border-gold-400 hover:text-gold-600'"
+              ? 'bg-primary-500 border-primary-500 text-primary-950'
+              : 'border-default text-muted hover:border-primary-500/50 hover:text-primary-500'"
             @click="activeCategory = cat.id"
           >
             {{ t(cat.label) }}
@@ -107,10 +91,7 @@ useSeoMeta({
           >
             {{ t(cat.label) }}
           </h2>
-          <div
-            class="flex-1 h-px"
-            :class="colorMode.value === 'dark' ? 'bg-carbon-800' : 'bg-stone-200'"
-          />
+          <div class="flex-1 h-px bg-accented" />
         </div>
 
         <!-- Grille plats -->
@@ -119,24 +100,17 @@ useSeoMeta({
             v-for="item in itemsByCategory(cat.id)"
             :key="item.id"
             :item="item"
-            :class="colorMode.value === 'dark'
-              ? 'bg-carbon-900/60'
-              : 'bg-stone-50'"
+            class="bg-muted"
           />
         </div>
       </section>
     </div>
 
     <!-- Informations pratiques -->
-    <div
-      class="border-t py-16"
-      :class="colorMode.value === 'dark'
-        ? 'bg-carbon-900/30 border-carbon-800/50'
-        : 'bg-stone-50 border-stone-200'"
-    >
+    <div class="border-t border-default bg-muted py-16">
       <div class="max-w-7xl mx-auto px-6">
         <div class="editorial-divider mb-10">
-          <span class="text-label text-gold-500 px-4">
+          <span class="text-label text-primary-500 px-4">
             {{ locale === 'fr' ? 'Informations' : 'Information' }}
           </span>
         </div>
@@ -144,15 +118,12 @@ useSeoMeta({
           <div>
             <UIcon
               name="i-lucide-leaf"
-              class="size-5 text-gold-500 mx-auto mb-3"
+              class="size-5 text-primary-500 mx-auto mb-3"
             />
             <p class="text-sm font-medium mb-1">
               {{ locale === 'fr' ? 'Produits de saison' : 'Seasonal produce' }}
             </p>
-            <p
-              class="text-xs"
-              :class="colorMode.value === 'dark' ? 'text-stone-500' : 'text-stone-400'"
-            >
+            <p class="text-xs text-dimmed">
               {{ locale === 'fr'
                 ? 'La carte évolue chaque semaine'
                 : 'The menu changes weekly' }}
@@ -161,15 +132,12 @@ useSeoMeta({
           <div>
             <UIcon
               name="i-lucide-wheat-off"
-              class="size-5 text-gold-500 mx-auto mb-3"
+              class="size-5 text-primary-500 mx-auto mb-3"
             />
             <p class="text-sm font-medium mb-1">
               {{ locale === 'fr' ? 'Allergènes' : 'Allergens' }}
             </p>
-            <p
-              class="text-xs"
-              :class="colorMode.value === 'dark' ? 'text-stone-500' : 'text-stone-400'"
-            >
+            <p class="text-xs text-dimmed">
               {{ locale === 'fr'
                 ? 'Mentionnez vos allergies à la réservation'
                 : 'Please mention allergies when booking' }}
@@ -178,15 +146,12 @@ useSeoMeta({
           <div>
             <UIcon
               name="i-lucide-wine"
-              class="size-5 text-gold-500 mx-auto mb-3"
+              class="size-5 text-primary-500 mx-auto mb-3"
             />
             <p class="text-sm font-medium mb-1">
               {{ locale === 'fr' ? 'Accords vins' : 'Wine pairings' }}
             </p>
-            <p
-              class="text-xs"
-              :class="colorMode.value === 'dark' ? 'text-stone-500' : 'text-stone-400'"
-            >
+            <p class="text-xs text-dimmed">
               {{ locale === 'fr'
                 ? 'Notre sommelier vous guide'
                 : 'Our sommelier will guide you' }}

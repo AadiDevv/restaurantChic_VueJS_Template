@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { locale } = useLang()
 const { info } = useRestaurant()
-const colorMode = useColorMode()
 </script>
 
 <template>
@@ -17,28 +16,23 @@ const colorMode = useColorMode()
           <!-- Placeholder portrait -->
           <div class="absolute inset-0 flex flex-col items-center justify-end p-8">
             <div
-              class="w-24 h-24 rounded-full mb-6 flex items-center justify-center border border-gold-500/20"
+              class="w-24 h-24 rounded-full mb-6 flex items-center justify-center border border-primary-500/20"
               style="background: radial-gradient(circle, var(--color-carbon-700), var(--color-carbon-800));"
             >
-              <UIcon name="i-lucide-user" class="size-10 text-stone-600" />
+              <UIcon name="i-lucide-user" class="size-10 text-muted" />
             </div>
           </div>
 
           <!-- Badge nom -->
           <div class="absolute bottom-8 left-8 right-8">
-            <div
-              class="rounded-card p-4 border backdrop-blur-sm"
-              :class="colorMode.value === 'dark'
-                ? 'bg-carbon-950/80 border-carbon-700/40'
-                : 'bg-white/90 border-stone-200/60'"
-            >
+            <div class="rounded-card p-4 border border-default/60 bg-default/80 backdrop-blur-sm">
               <p
                 class="font-display text-lg"
                 style="font-family: var(--font-display);"
               >
                 {{ info.chef.name }}
               </p>
-              <p class="text-label text-gold-500 mt-1">
+              <p class="text-label text-primary-500 mt-1">
                 {{ info.chef.title }}
               </p>
             </div>
@@ -56,7 +50,7 @@ const colorMode = useColorMode()
       <div class="space-y-8 order-1 lg:order-2">
         <div class="flex items-center gap-4 reveal">
           <span class="gold-line" />
-          <span class="text-label text-gold-500">
+          <span class="text-label text-primary-500">
             {{ locale === 'fr' ? 'En cuisine' : 'In the kitchen' }}
           </span>
         </div>
@@ -65,10 +59,7 @@ const colorMode = useColorMode()
           {{ info.chef.name }}
         </h2>
 
-        <p
-          class="text-base leading-8 reveal"
-          :class="colorMode.value === 'dark' ? 'text-stone-400' : 'text-stone-600'"
-        >
+        <p class="text-base leading-8 text-muted reveal">
           {{ info.chef.bio }}
         </p>
 
@@ -76,25 +67,19 @@ const colorMode = useColorMode()
         <div class="grid grid-cols-2 gap-6 reveal">
           <div>
             <p
-              class="text-display-md text-gold-500 mb-1"
+              class="text-display-md text-primary-500 mb-1"
               style="font-family: var(--font-display); font-size: 2rem;"
             >3</p>
-            <p
-              class="text-label"
-              :class="colorMode.value === 'dark' ? 'text-stone-500' : 'text-stone-400'"
-            >
+            <p class="text-label text-dimmed">
               {{ locale === 'fr' ? 'continents explorés' : 'continents explored' }}
             </p>
           </div>
           <div>
             <p
-              class="text-display-md text-gold-500 mb-1"
+              class="text-display-md text-primary-500 mb-1"
               style="font-family: var(--font-display); font-size: 2rem;"
             >12</p>
-            <p
-              class="text-label"
-              :class="colorMode.value === 'dark' ? 'text-stone-500' : 'text-stone-400'"
-            >
+            <p class="text-label text-dimmed">
               {{ locale === 'fr' ? 'ans d\'expérience' : 'years of experience' }}
             </p>
           </div>

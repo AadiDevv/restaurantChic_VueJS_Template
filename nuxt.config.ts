@@ -5,6 +5,14 @@ export default defineNuxtConfig({
     '@nuxt/ui'
   ],
 
+  ui: {
+    theme: {
+      /* Enregistrement des slots sémantiques → génère --ui-color-{name}-*
+         et active color="{name}" sur tous les composants Nuxt UI          */
+      colors: ['primary', 'accent', 'success', 'warning', 'error', 'info', 'neutral']
+    }
+  },
+
   devtools: {
     enabled: true
   },

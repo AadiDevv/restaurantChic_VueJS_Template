@@ -3,8 +3,6 @@ import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
 const { locale } = useLang()
-const { info } = useRestaurant()
-const colorMode = useColorMode()
 
 const schema = computed(() => z.object({
   firstName: z.string().min(2, locale.value === 'fr' ? 'Prénom requis' : 'First name required'),
@@ -53,9 +51,9 @@ function onSubmit(event: FormSubmitEvent<Schema>) {
       class="text-center py-16 space-y-4"
     >
       <div
-        class="w-16 h-16 rounded-full border border-gold-500/40 flex items-center justify-center mx-auto mb-6"
+        class="w-16 h-16 rounded-full border border-primary-500/40 flex items-center justify-center mx-auto mb-6"
       >
-        <UIcon name="i-lucide-check" class="size-7 text-gold-500" />
+        <UIcon name="i-lucide-check" class="size-7 text-primary-500" />
       </div>
       <h3
         class="text-display-md"
@@ -63,10 +61,7 @@ function onSubmit(event: FormSubmitEvent<Schema>) {
       >
         {{ locale === 'fr' ? 'Demande reçue' : 'Request received' }}
       </h3>
-      <p
-        class="text-sm max-w-sm mx-auto leading-relaxed"
-        :class="colorMode.value === 'dark' ? 'text-stone-400' : 'text-stone-500'"
-      >
+      <p class="text-sm text-muted max-w-sm mx-auto leading-relaxed">
         {{ locale === 'fr'
           ? `Nous vous confirmerons votre réservation par email sous 24h. À bientôt chez BRAISE.`
           : `We will confirm your reservation by email within 24 hours. See you at BRAISE.` }}

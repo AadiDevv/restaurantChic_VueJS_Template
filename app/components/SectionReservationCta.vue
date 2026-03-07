@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { locale } = useLang()
 const { info } = useRestaurant()
-const colorMode = useColorMode()
 </script>
 
 <template>
@@ -21,7 +20,7 @@ const colorMode = useColorMode()
         <div class="space-y-6 max-w-xl">
           <div class="flex items-center gap-4">
             <span class="gold-line" />
-            <span class="text-label text-gold-500">
+            <span class="text-label text-primary-500">
               {{ locale === 'fr' ? 'Réservation' : 'Reservations' }}
             </span>
           </div>
@@ -35,7 +34,7 @@ const colorMode = useColorMode()
               : 'Reserve your\nexperience.' }}
           </h2>
 
-          <p class="text-stone-400 leading-relaxed">
+          <p class="text-white/60 leading-relaxed">
             {{ locale === 'fr'
               ? 'Du mardi au samedi. Midi & soir. Privatisation disponible sur demande.'
               : 'Tuesday to Saturday. Lunch & dinner. Private dining available on request.' }}
@@ -55,7 +54,6 @@ const colorMode = useColorMode()
             size="lg"
             variant="outline"
             color="neutral"
-            class="border-stone-600 text-stone-300 hover:border-gold-500 hover:text-gold-400"
           >
             <UIcon name="i-lucide-phone" class="size-4 mr-2" />
             {{ info.phone }}

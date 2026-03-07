@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { locale } = useLang()
 const { info } = useRestaurant()
-const colorMode = useColorMode()
 
 useSeoMeta({
   title: computed(() => locale.value === 'fr' ? 'Réservation — BRAISE' : 'Reservation — BRAISE'),
@@ -20,7 +19,7 @@ useSeoMeta({
           <div>
             <div class="flex items-center gap-4 mb-6 enter-fade">
               <span class="gold-line" />
-              <span class="text-label text-gold-500">
+              <span class="text-label text-primary-500">
                 {{ locale === 'fr' ? 'Réservation' : 'Reservation' }}
               </span>
             </div>
@@ -30,10 +29,7 @@ useSeoMeta({
             >
               {{ locale === 'fr' ? 'Votre table\nvous attend.' : 'Your table\nawaits.' }}
             </h1>
-            <p
-              class="text-sm leading-relaxed enter-fade-slow"
-              :class="colorMode.value === 'dark' ? 'text-stone-400' : 'text-stone-500'"
-            >
+            <p class="text-sm text-muted leading-relaxed enter-fade-slow">
               {{ locale === 'fr'
                 ? 'Réservez en ligne ou appelez-nous directement. Nous vous confirmerons par email.'
                 : 'Book online or call us directly. We will confirm by email.' }}
@@ -42,7 +38,7 @@ useSeoMeta({
 
           <!-- Horaires -->
           <div class="reveal space-y-4">
-            <p class="text-label text-gold-500">
+            <p class="text-label text-primary-500">
               {{ locale === 'fr' ? 'Horaires' : 'Opening hours' }}
             </p>
             <div class="space-y-3">
@@ -51,14 +47,10 @@ useSeoMeta({
                 :key="i"
                 class="flex justify-between items-baseline text-sm"
               >
-                <span :class="colorMode.value === 'dark' ? 'text-stone-400' : 'text-stone-500'">
-                  {{ slot.days }}
-                </span>
+                <span class="text-muted">{{ slot.days }}</span>
                 <span
                   class="font-mono text-xs"
-                  :class="slot.hours === '—'
-                    ? colorMode.value === 'dark' ? 'text-stone-600' : 'text-stone-300'
-                    : 'text-gold-500'"
+                  :class="slot.hours === '—' ? 'text-dimmed' : 'text-primary-500'"
                 >
                   {{ slot.hours }}
                 </span>
@@ -68,47 +60,36 @@ useSeoMeta({
 
           <!-- Adresse + Contact -->
           <div class="reveal space-y-4">
-            <p class="text-label text-gold-500">
+            <p class="text-label text-primary-500">
               {{ locale === 'fr' ? 'Nous trouver' : 'Find us' }}
             </p>
-            <div
-              class="space-y-2 text-sm"
-              :class="colorMode.value === 'dark' ? 'text-stone-400' : 'text-stone-500'"
-            >
+            <div class="space-y-2 text-sm text-muted">
               <div class="flex items-start gap-3">
-                <UIcon name="i-lucide-map-pin" class="size-4 text-gold-500 mt-0.5 shrink-0" />
+                <UIcon name="i-lucide-map-pin" class="size-4 text-primary-500 mt-0.5 shrink-0" />
                 <span>{{ info.address }}<br>{{ info.city }}</span>
               </div>
               <a
                 :href="`tel:${info.phone}`"
-                class="flex items-center gap-3 transition-colors hover:text-gold-500"
+                class="flex items-center gap-3 transition-colors hover:text-primary-500"
               >
-                <UIcon name="i-lucide-phone" class="size-4 text-gold-500 shrink-0" />
+                <UIcon name="i-lucide-phone" class="size-4 text-primary-500 shrink-0" />
                 {{ info.phone }}
               </a>
               <a
                 :href="`mailto:${info.email}`"
-                class="flex items-center gap-3 transition-colors hover:text-gold-500"
+                class="flex items-center gap-3 transition-colors hover:text-primary-500"
               >
-                <UIcon name="i-lucide-mail" class="size-4 text-gold-500 shrink-0" />
+                <UIcon name="i-lucide-mail" class="size-4 text-primary-500 shrink-0" />
                 {{ info.email }}
               </a>
             </div>
           </div>
 
           <!-- Note privatisation -->
-          <div
-            class="rounded-card p-5 border reveal"
-            :class="colorMode.value === 'dark'
-              ? 'bg-carbon-900/60 border-carbon-700/40'
-              : 'bg-stone-50 border-stone-200'"
-          >
+          <div class="rounded-card p-5 border border-default bg-elevated reveal">
             <div class="flex items-start gap-3">
-              <UIcon name="i-lucide-info" class="size-4 text-gold-500 mt-0.5 shrink-0" />
-              <p
-                class="text-sm leading-relaxed"
-                :class="colorMode.value === 'dark' ? 'text-stone-400' : 'text-stone-500'"
-              >
+              <UIcon name="i-lucide-info" class="size-4 text-primary-500 mt-0.5 shrink-0" />
+              <p class="text-sm text-muted leading-relaxed">
                 {{ locale === 'fr'
                   ? 'Pour les groupes de 9 personnes et plus ou une privatisation, contactez-nous directement.'
                   : 'For groups of 9 or more or private events, please contact us directly.' }}
@@ -119,12 +100,7 @@ useSeoMeta({
 
         <!-- Colonne droite — Formulaire -->
         <div class="lg:col-span-3 reveal-right">
-          <div
-            class="rounded-loose p-8 lg:p-10 border"
-            :class="colorMode.value === 'dark'
-              ? 'bg-carbon-900/60 border-carbon-700/40'
-              : 'bg-white border-stone-100 shadow-card'"
-          >
+          <div class="rounded-loose p-8 lg:p-10 border border-default bg-default shadow-card">
             <FormReservation />
           </div>
         </div>

@@ -3,17 +3,25 @@ export default defineAppConfig({
 
     /* ══════════════════════════════════════════════════════
        COULEURS — Mapping sémantique → palette
-       primary   = 'gold'   → --color-gold-* défini dans main.css
-       neutral   = 'stone'  → Tailwind built-in (chaud, non-froid)
+       Règle : les composants n'utilisent JAMAIS les couleurs
+       de palette directement (gold, stone…), toujours les
+       tokens sémantiques (primary, neutral, success…).
+
+       primary  = 'gold'    → --color-gold-*   (main.css custom)
+       neutral  = 'stone'   → Tailwind built-in (ton chaud, pas zinc)
+       accent   = terracotta → @theme static uniquement (décoratif)
        ══════════════════════════════════════════════════════ */
     colors: {
-      primary:   'amber',     /* ← palette custom main.css           */
-      secondary: 'stone',    /* ← Tailwind built-in, ton chaud      */
-      success:   'emerald',
-      warning:   'amber',
-      error:     'red',
-      neutral:   'stone'
+      primary:  'gold',       /* Brand principal — CTA, prix, labels, accents   */
+      accent:   'accent',     /* Terracotta — braise, terre cuite (main.css)     */
+      success:  'emerald',    /* Confirmation réservation, badges disponible     */
+      warning:  'amber',      /* Badges "complet", allergènes                   */
+      error:    'red',        /* Validation Zod (FormReservation)               */
+      info:     'sky',        /* Messages informatifs                            */
+      neutral:  'stone'       /* Structure : fond, texte, borders → --ui-*      */
     },
+    /* NOTE : 'accent' enregistré dans nuxt.config.ts ui.theme.colors
+              → génère --ui-color-accent-* et active color="accent" sur UButton */
 
     /* ══════════════════════════════════════════════════════
        BUTTON — Défauts globaux

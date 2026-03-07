@@ -1,7 +1,6 @@
 <script setup lang="ts">
-const { locale, t } = useLang()
+const { locale } = useLang()
 const { info } = useRestaurant()
-const colorMode = useColorMode()
 </script>
 
 <template>
@@ -27,7 +26,7 @@ const colorMode = useColorMode()
         <!-- Label éditorial -->
         <div class="flex items-center gap-4 mb-8 enter-fade">
           <span class="gold-line" />
-          <span class="text-label text-gold-500">
+          <span class="text-label text-primary-500">
             {{ locale === 'fr' ? 'Restaurant · Paris 11e' : 'Restaurant · Paris 11th' }}
           </span>
         </div>
@@ -42,7 +41,7 @@ const colorMode = useColorMode()
         </h1>
 
         <!-- Sous-titre -->
-        <p class="text-lg text-stone-300 max-w-lg leading-relaxed mb-10 enter-fade-slow">
+        <p class="text-lg text-white/70 max-w-lg leading-relaxed mb-10 enter-fade-slow">
           {{ info.description }}
         </p>
 
@@ -60,7 +59,6 @@ const colorMode = useColorMode()
             size="lg"
             variant="outline"
             color="neutral"
-            class="border-stone-600 text-stone-300 hover:border-gold-500 hover:text-gold-400 transition-colors"
           >
             {{ locale === 'fr' ? 'Découvrir la carte' : 'Explore the menu' }}
           </UButton>
@@ -71,10 +69,10 @@ const colorMode = useColorMode()
 
     <!-- Scroll indicator -->
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float">
-      <span class="text-label text-stone-600" style="font-size: 0.6rem;">
+      <span class="text-label text-white/40" style="font-size: 0.6rem;">
         {{ locale === 'fr' ? 'Défiler' : 'Scroll' }}
       </span>
-      <div class="w-px h-8 bg-gradient-to-b from-gold-500/50 to-transparent" />
+      <div class="w-px h-8 bg-gradient-to-b from-primary-500/50 to-transparent" />
     </div>
   </section>
 </template>

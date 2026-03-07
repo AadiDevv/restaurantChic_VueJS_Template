@@ -1,16 +1,12 @@
 <script setup lang="ts">
 const { locale } = useLang()
 const { featuredItems } = useMenu()
-const colorMode = useColorMode()
 
 const preview = computed(() => featuredItems.value.slice(0, 3))
 </script>
 
 <template>
-  <section
-    class="py-28"
-    :class="colorMode.value === 'dark' ? 'bg-carbon-900/40' : 'bg-stone-50'"
-  >
+  <section class="py-28 bg-muted">
     <div class="max-w-7xl mx-auto px-6">
 
       <!-- En-tête section -->
@@ -18,7 +14,7 @@ const preview = computed(() => featuredItems.value.slice(0, 3))
         <div class="space-y-4">
           <div class="flex items-center gap-4 reveal">
             <span class="gold-line" />
-            <span class="text-label text-gold-500">
+            <span class="text-label text-primary-500">
               {{ locale === 'fr' ? 'Nos signatures' : 'Our signatures' }}
             </span>
           </div>
@@ -44,10 +40,7 @@ const preview = computed(() => featuredItems.value.slice(0, 3))
           :key="item.id"
           :item="item"
           :featured="true"
-          class="rounded-loose border"
-          :class="colorMode.value === 'dark'
-            ? 'bg-carbon-900 border-carbon-700/40'
-            : 'bg-white border-stone-100'"
+          class="rounded-loose border border-default bg-default"
         />
       </div>
 
